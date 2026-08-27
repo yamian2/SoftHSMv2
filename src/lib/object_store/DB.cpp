@@ -46,7 +46,9 @@
 #include <unistd.h>
 #include <errno.h>
 #else
-#define gmtime_r(tt, pm) (pm=gmtime(tt))
+#ifdef _MSC_VER
+#define gmtime_r(tt, pm) (gmtime_s((pm), (tt)) == 0 ? (pm) : NULL)
+#endif
 #include <io.h>
 #define S_IRUSR 0400
 #define S_IWUSR 0200
@@ -938,4 +940,3 @@ bool DB::Connection::rollbackTransaction()
 	Statement statement = prepare("rollback");
 	return statement.step()==Statement::ReturnCodeDone;
 }
-
