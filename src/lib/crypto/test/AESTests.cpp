@@ -32,6 +32,7 @@
 
 #include <stdlib.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include "config.h"
 #include "AESTests.h"
 #include "CryptoFactory.h"
 #include "AESKey.h"
@@ -979,6 +980,14 @@ void AESTests::testGCM()
 
 	for (int i = 0; i < 8; i++)
 	{
+#ifdef WITH_SYMCRYPT
+		// SymCrypt AES-GCM only supports 12-byte (96-bit) nonces, so skip the
+		// NIST vectors that use a different nonce length.
+		if (ByteString(test128[i][1]).size() != 12)
+		{
+			continue;
+		}
+#endif
 		ByteString keyData128(test128[i][0]);
 		ByteString keyData192(test192[i][0]);
 		ByteString keyData256(test256[i][0]);

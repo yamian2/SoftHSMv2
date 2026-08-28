@@ -36,6 +36,8 @@
 #include "SymCryptRNG.h"
 #include "SymCryptDigests.h"
 #include "SymCryptRSA.h"
+#include "SymCryptAES.h"
+#include "SymCryptDES.h"
 #ifdef WITH_ECC
 #include "SymCryptECDSA.h"
 #include "SymCryptECDH.h"
@@ -86,7 +88,18 @@ void SymCryptCryptoFactory::reset()
 // Create a concrete instance of a symmetric algorithm
 SymmetricAlgorithm* SymCryptCryptoFactory::getSymmetricAlgorithm(SymAlgo::Type algorithm)
 {
-	// Symmetric algorithms are not yet implemented for the SymCrypt backend
+	switch (algorithm)
+	{
+		case SymAlgo::AES:
+			return new SymCryptAES();
+		case SymAlgo::DES:
+		case SymAlgo::DES3:
+			return new SymCryptDES();
+		default:
+			break;
+	}
+
+	// No algorithm implementation is available
 	ERROR_MSG("Unsupported algorithm '%i'", algorithm);
 	return NULL;
 }

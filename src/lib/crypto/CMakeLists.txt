@@ -156,10 +156,13 @@ if(WITH_SYMCRYPT)
     list(APPEND SOURCES SymCryptCryptoFactory.cpp
                         CompositeMLDSAParameters.cpp
                         CompositeMLDSAUtil.cpp
+                        SymCryptAES.cpp
+                        SymCryptSymmetricAlgorithm.cpp
                         SymCryptCompositeMLDSA.cpp
                         SymCryptCompositeMLDSAKeyPair.cpp
                         SymCryptCompositeMLDSAPrivateKey.cpp
                         SymCryptCompositeMLDSAPublicKey.cpp
+                        SymCryptDES.cpp
                         SymCryptDigests.cpp
                         SymCryptECDH.cpp
                         SymCryptECDSA.cpp
