@@ -839,8 +839,12 @@ void SignVerifyTests::testMLDSASignVerify(CK_ULONG parameterSet)
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[1], sizeof(params[1]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[2], sizeof(params[2]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[3], sizeof(params[3]));
+#ifndef WITH_SYMCRYPT
+	// SymCrypt supports hedged (randomised) ML-DSA signing only; deterministic
+	// signing (CKH_DETERMINISTIC_REQUIRED) is unsupported and rejected.
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[4], sizeof(params[4]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[5], sizeof(params[5]));
+#endif
 
 	// Private Session Keys
 	rv = generateMLDSA(parameterSet,hSessionRW,IN_SESSION,IS_PRIVATE,IN_SESSION,IS_PRIVATE,hPuk,hPrk);
@@ -850,8 +854,12 @@ void SignVerifyTests::testMLDSASignVerify(CK_ULONG parameterSet)
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[1], sizeof(params[1]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[2], sizeof(params[2]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[3], sizeof(params[3]));
+#ifndef WITH_SYMCRYPT
+	// SymCrypt supports hedged (randomised) ML-DSA signing only; deterministic
+	// signing (CKH_DETERMINISTIC_REQUIRED) is unsupported and rejected.
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[4], sizeof(params[4]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[5], sizeof(params[5]));
+#endif
 
 	// Public Token Keys
 	rv = generateMLDSA(parameterSet,hSessionRW,ON_TOKEN,IS_PUBLIC,ON_TOKEN,IS_PUBLIC,hPuk,hPrk);
@@ -861,8 +869,12 @@ void SignVerifyTests::testMLDSASignVerify(CK_ULONG parameterSet)
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[1], sizeof(params[1]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[2], sizeof(params[2]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[3], sizeof(params[3]));
+#ifndef WITH_SYMCRYPT
+	// SymCrypt supports hedged (randomised) ML-DSA signing only; deterministic
+	// signing (CKH_DETERMINISTIC_REQUIRED) is unsupported and rejected.
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[4], sizeof(params[4]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[5], sizeof(params[5]));
+#endif
 
 	// Private Token Keys
 	rv = generateMLDSA(parameterSet, hSessionRW,ON_TOKEN,IS_PRIVATE,ON_TOKEN,IS_PRIVATE,hPuk,hPrk);
@@ -872,8 +884,12 @@ void SignVerifyTests::testMLDSASignVerify(CK_ULONG parameterSet)
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[1], sizeof(params[1]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[2], sizeof(params[2]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[3], sizeof(params[3]));
+#ifndef WITH_SYMCRYPT
+	// SymCrypt supports hedged (randomised) ML-DSA signing only; deterministic
+	// signing (CKH_DETERMINISTIC_REQUIRED) is unsupported and rejected.
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[4], sizeof(params[4]));
 	signVerifySingle(CKM_ML_DSA, hSessionRO, hPuk,hPrk, &params[5], sizeof(params[5]));
+#endif
 }
 #endif
 
