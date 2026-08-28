@@ -1034,7 +1034,15 @@ CK_RV SoftHSM::C_GetMechanismInfo(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_
 	}
 	else
 	{
+#ifdef WITH_SYMCRYPT
+		// The SymCrypt backend does not implement DSA. Rather than failing
+		// every C_GetMechanismInfo call, report zero key sizes; the DSA
+		// mechanisms will still fail when actually used.
+		dsaMinSize = 0;
+		dsaMaxSize = 0;
+#else
 		return CKR_GENERAL_ERROR;
+#endif
 	}
 	CryptoFactory::i()->recycleAsymmetricAlgorithm(dsa);
 
@@ -1046,7 +1054,15 @@ CK_RV SoftHSM::C_GetMechanismInfo(CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_
 	}
 	else
 	{
+#ifdef WITH_SYMCRYPT
+		// The SymCrypt backend does not implement DH. Rather than failing
+		// every C_GetMechanismInfo call, report zero key sizes; the DH
+		// mechanisms will still fail when actually used.
+		dhMinSize = 0;
+		dhMaxSize = 0;
+#else
 		return CKR_GENERAL_ERROR;
+#endif
 	}
 	CryptoFactory::i()->recycleAsymmetricAlgorithm(dh);
 
