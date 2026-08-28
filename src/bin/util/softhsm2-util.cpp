@@ -50,6 +50,8 @@
 
 #if defined(WITH_OPENSSL)
 #include "OSSLCryptoFactory.h"
+#elif defined(WITH_SYMCRYPT)
+#include "SymCryptCryptoFactory.h"
 #else
 #include "BotanCryptoFactory.h"
 #endif
@@ -78,6 +80,8 @@ std::unique_ptr<MutexFactory> MutexFactory::instance(nullptr);
 std::unique_ptr<SecureMemoryRegistry> SecureMemoryRegistry::instance(nullptr);
 #if defined(WITH_OPENSSL)
 std::unique_ptr<OSSLCryptoFactory> OSSLCryptoFactory::instance(nullptr);
+#elif defined(WITH_SYMCRYPT)
+std::unique_ptr<SymCryptCryptoFactory> SymCryptCryptoFactory::instance(nullptr);
 #else
 std::unique_ptr<BotanCryptoFactory> BotanCryptoFactory::instance(nullptr);
 #endif
@@ -88,6 +92,8 @@ std::auto_ptr<MutexFactory> MutexFactory::instance(NULL);
 std::auto_ptr<SecureMemoryRegistry> SecureMemoryRegistry::instance(NULL);
 #if defined(WITH_OPENSSL)
 std::auto_ptr<OSSLCryptoFactory> OSSLCryptoFactory::instance(NULL);
+#elif defined(WITH_SYMCRYPT)
+std::auto_ptr<SymCryptCryptoFactory> SymCryptCryptoFactory::instance(NULL);
 #else
 std::auto_ptr<BotanCryptoFactory> BotanCryptoFactory::instance(NULL);
 #endif

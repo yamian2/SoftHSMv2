@@ -152,6 +152,36 @@ if(WITH_BOTAN)
                         )
 endif(WITH_BOTAN)
 
+if(WITH_SYMCRYPT)
+    list(APPEND SOURCES SymCryptCryptoFactory.cpp
+                        CompositeMLDSAParameters.cpp
+                        CompositeMLDSAUtil.cpp
+                        SymCryptCompositeMLDSA.cpp
+                        SymCryptCompositeMLDSAKeyPair.cpp
+                        SymCryptCompositeMLDSAPrivateKey.cpp
+                        SymCryptCompositeMLDSAPublicKey.cpp
+                        SymCryptDigests.cpp
+                        SymCryptECDH.cpp
+                        SymCryptECDSA.cpp
+                        SymCryptECKeyPair.cpp
+                        SymCryptECPrivateKey.cpp
+                        SymCryptECPublicKey.cpp
+                        SymCryptECUtil.cpp
+                        SymCryptHashAlgorithm.cpp
+                        SymCryptImports.cpp
+                        SymCryptMLDSA.cpp
+                        SymCryptMLDSAKeyPair.cpp
+                        SymCryptMLDSAPrivateKey.cpp
+                        SymCryptMLDSAPublicKey.cpp
+                        SymCryptRNG.cpp
+                        SymCryptRSA.cpp
+                        SymCryptRSAKeyPair.cpp
+                        SymCryptRSAPrivateKey.cpp
+                        SymCryptRSAPublicKey.cpp
+                        SymCryptUtil.cpp
+                        )
+endif(WITH_SYMCRYPT)
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 	list(APPEND INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/../win32)
 ENDIF()

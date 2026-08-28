@@ -487,8 +487,87 @@ elseif(WITH_CRYPTO_BACKEND STREQUAL "openssl")
     # Compile with AES_GCM
     set(WITH_AES_GCM 1)
 
+elseif(WITH_CRYPTO_BACKEND STREQUAL "symcrypt")
+    set(WITH_SYMCRYPT 1)
+
+    # Locate the Microsoft SymCrypt distribution. SYMCRYPT_ROOT is expected to
+    # point at an extracted release package containing 'inc' (headers) and
+    # 'dll' (symcrypt.lib / symcrypt.dll). It can be provided on the command
+    # line (-DSYMCRYPT_ROOT=...) or via the SYMCRYPT_ROOT environment variable.
+    if(NOT SYMCRYPT_ROOT)
+        if(DEFINED ENV{SYMCRYPT_ROOT})
+            set(SYMCRYPT_ROOT "$ENV{SYMCRYPT_ROOT}")
+        endif()
+    endif()
+    if(NOT SYMCRYPT_ROOT)
+        message(FATAL_ERROR "SymCrypt backend selected but SYMCRYPT_ROOT is not set. "
+                            "Point it at an extracted SymCrypt release (containing inc/ and dll/).")
+    endif()
+
+    find_path(SYMCRYPT_INCLUDE_DIR symcrypt.h
+              HINTS "${SYMCRYPT_ROOT}/inc" "${SYMCRYPT_ROOT}/include" "${SYMCRYPT_ROOT}")
+    find_library(SYMCRYPT_LIBRARY NAMES symcrypt libsymcrypt
+                 HINTS "${SYMCRYPT_ROOT}/dll" "${SYMCRYPT_ROOT}/lib" "${SYMCRYPT_ROOT}")
+    if(NOT SYMCRYPT_INCLUDE_DIR OR NOT SYMCRYPT_LIBRARY)
+        message(FATAL_ERROR "Failed to find SymCrypt headers/library under SYMCRYPT_ROOT='${SYMCRYPT_ROOT}'")
+    endif()
+
+    set(CRYPTO_INCLUDES ${SYMCRYPT_INCLUDE_DIR})
+    set(CRYPTO_LIBS ${SYMCRYPT_LIBRARY})
+    message(STATUS "SymCrypt: Includes: ${CRYPTO_INCLUDES}")
+    message(STATUS "SymCrypt: Libs: ${CRYPTO_LIBS}")
+
+    # SymCrypt natively supports the elliptic-curve, EdDSA and PQC primitives.
+    if(ENABLE_ECC)
+        set(WITH_ECC 1)
+        message(STATUS "SymCrypt: Support for ECC is enabled")
+    else(ENABLE_ECC)
+        message(STATUS "SymCrypt: Support for ECC is disabled")
+    endif(ENABLE_ECC)
+
+    if(ENABLE_EDDSA)
+        set(WITH_EDDSA 1)
+        message(STATUS "SymCrypt: Support for EDDSA is enabled")
+    else(ENABLE_EDDSA)
+        message(STATUS "SymCrypt: Support for EDDSA is disabled")
+    endif(ENABLE_EDDSA)
+
+    if(ENABLE_MLDSA)
+        set(WITH_ML_DSA 1)
+        message(STATUS "SymCrypt: Support for ML-DSA is enabled")
+    else(ENABLE_MLDSA)
+        message(STATUS "SymCrypt: Support for ML-DSA is disabled")
+    endif(ENABLE_MLDSA)
+
+    if(ENABLE_MLKEM)
+        set(WITH_ML_KEM 1)
+        message(STATUS "SymCrypt: Support for ML-KEM is enabled")
+    else(ENABLE_MLKEM)
+        message(STATUS "SymCrypt: Support for ML-KEM is disabled")
+    endif(ENABLE_MLKEM)
+
+    if(ENABLE_GOST)
+        message(FATAL_ERROR "SymCrypt: GOST is not supported by the SymCrypt backend")
+    else(ENABLE_GOST)
+        message(STATUS "SymCrypt: Support for GOST is disabled")
+    endif(ENABLE_GOST)
+
+    if(ENABLE_FIPS)
+        # SymCrypt is a FIPS 140 validated module, but SoftHSM's FIPS self-test
+        # plumbing is written against OpenSSL's FIPS_mode API. Not wired up yet.
+        message(FATAL_ERROR "SymCrypt: FIPS self-test integration is not supported yet")
+    else(ENABLE_FIPS)
+        message(STATUS "SymCrypt: Support for FIPS 140-2 mode is disabled")
+    endif(ENABLE_FIPS)
+
+    # SymCrypt provides AES key wrap (RFC 3394) and AES-GCM natively.
+    set(HAVE_AES_KEY_WRAP 1)
+    set(HAVE_AES_KEY_WRAP_PAD 1)
+    set(WITH_RAW_PSS 1)
+    set(WITH_AES_GCM 1)
+
 else()
-    message(FATAL_ERROR "Crypto backend '${WITH_CRYPTO_BACKEND}' not supported. Use openssl or botan.")
+    message(FATAL_ERROR "Crypto backend '${WITH_CRYPTO_BACKEND}' not supported. Use openssl, botan or symcrypt.")
 endif()
 
 # Find SQLite3

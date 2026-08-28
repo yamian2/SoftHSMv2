@@ -523,7 +523,7 @@ void RSATests::testSignVerifyKnownVector()
 	CPPUNIT_ASSERT(rsa->signUpdate(dataToSign1));
 	CPPUNIT_ASSERT(rsa->signFinal(signature1_1));
 
-#ifndef WITH_BOTAN
+#if !defined(WITH_BOTAN) && !defined(WITH_SYMCRYPT)
 	CPPUNIT_ASSERT(rsa->signInit(privKey1_2, AsymMech::RSA_SHA1_PKCS));
 	CPPUNIT_ASSERT(rsa->signUpdate(dataToSign1));
 	CPPUNIT_ASSERT(rsa->signFinal(signature1_2));
@@ -549,7 +549,7 @@ void RSATests::testSignVerifyKnownVector()
 	CPPUNIT_ASSERT(rsa->signUpdate(dataToSign2));
 	CPPUNIT_ASSERT(rsa->signFinal(signature2_1));
 
-#ifndef WITH_BOTAN
+#if !defined(WITH_BOTAN) && !defined(WITH_SYMCRYPT)
 	CPPUNIT_ASSERT(rsa->signInit(privKey2_2, AsymMech::RSA_SHA1_PKCS));
 	CPPUNIT_ASSERT(rsa->signUpdate(dataToSign2));
 	CPPUNIT_ASSERT(rsa->signFinal(signature2_2));

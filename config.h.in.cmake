@@ -165,6 +165,7 @@
 
 /* Compile with OpenSSL support */
 #cmakedefine WITH_OPENSSL @WITH_OPENSSL@
+#cmakedefine WITH_SYMCRYPT @WITH_SYMCRYPT@
 
 /* Compile with raw RSA PKCS PSS */
 #cmakedefine WITH_RAW_PSS @WITH_RAW_PSS@
