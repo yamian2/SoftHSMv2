@@ -38,6 +38,7 @@
 #include "SymCryptRSA.h"
 #include "SymCryptAES.h"
 #include "SymCryptDES.h"
+#include "SymCryptMacAlgorithm.h"
 #ifdef WITH_ECC
 #include "SymCryptECDSA.h"
 #include "SymCryptECDH.h"
@@ -170,7 +171,29 @@ HashAlgorithm* SymCryptCryptoFactory::getHashAlgorithm(HashAlgo::Type algorithm)
 // Create a concrete instance of a MAC algorithm
 MacAlgorithm* SymCryptCryptoFactory::getMacAlgorithm(MacAlgo::Type algorithm)
 {
-	// MAC algorithms are not yet implemented for the SymCrypt backend
+	switch (algorithm)
+	{
+		case MacAlgo::HMAC_MD5:
+			return new SymCryptHMACMD5();
+		case MacAlgo::HMAC_SHA1:
+			return new SymCryptHMACSHA1();
+		case MacAlgo::HMAC_SHA224:
+			return new SymCryptHMACSHA224();
+		case MacAlgo::HMAC_SHA256:
+			return new SymCryptHMACSHA256();
+		case MacAlgo::HMAC_SHA384:
+			return new SymCryptHMACSHA384();
+		case MacAlgo::HMAC_SHA512:
+			return new SymCryptHMACSHA512();
+		case MacAlgo::CMAC_DES:
+			return new SymCryptCMACDES();
+		case MacAlgo::CMAC_AES:
+			return new SymCryptCMACAES();
+		default:
+			break;
+	}
+
+	// No algorithm implementation is available
 	ERROR_MSG("Unsupported algorithm '%i'", algorithm);
 	return NULL;
 }

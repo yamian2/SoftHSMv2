@@ -172,6 +172,7 @@ if(WITH_SYMCRYPT)
                         SymCryptECUtil.cpp
                         SymCryptHashAlgorithm.cpp
                         SymCryptImports.cpp
+                        SymCryptMacAlgorithm.cpp
                         SymCryptMLDSA.cpp
                         SymCryptMLDSAKeyPair.cpp
                         SymCryptMLDSAPrivateKey.cpp
