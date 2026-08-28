@@ -45,6 +45,9 @@
 #ifdef WITH_ML_DSA
 #include "SymCryptMLDSA.h"
 #endif
+#ifdef WITH_ML_KEM
+#include "SymCryptMLKEM.h"
+#endif
 #if defined(WITH_ML_DSA) && defined(WITH_ECC)
 #include "SymCryptCompositeMLDSA.h"
 #endif
@@ -120,6 +123,10 @@ AsymmetricAlgorithm* SymCryptCryptoFactory::getAsymmetricAlgorithm(AsymAlgo::Typ
 #ifdef WITH_ML_DSA
 		case AsymAlgo::MLDSA:
 			return new SymCryptMLDSA();
+#endif
+#ifdef WITH_ML_KEM
+		case AsymAlgo::MLKEM:
+			return new SymCryptMLKEM();
 #endif
 #if defined(WITH_ML_DSA) && defined(WITH_ECC)
 		case AsymAlgo::COMPOSITE_MLDSA:

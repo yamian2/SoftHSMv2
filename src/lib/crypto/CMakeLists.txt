@@ -176,6 +176,10 @@ if(WITH_SYMCRYPT)
                         SymCryptMLDSAKeyPair.cpp
                         SymCryptMLDSAPrivateKey.cpp
                         SymCryptMLDSAPublicKey.cpp
+                        SymCryptMLKEM.cpp
+                        SymCryptMLKEMKeyPair.cpp
+                        SymCryptMLKEMPrivateKey.cpp
+                        SymCryptMLKEMPublicKey.cpp
                         SymCryptRNG.cpp
                         SymCryptRSA.cpp
                         SymCryptRSAKeyPair.cpp
